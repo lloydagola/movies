@@ -5,5 +5,3 @@ export type TMovie = {
   genres: string[];
   posterUrl: string;
 };
-
-export type TMovieCardProps = { movie: TMovie };
