@@ -22,7 +22,7 @@ function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const dataFiltered = filterMovies(searchQuery, movies);
   return (
-    <Box className="App">
+    <Box component="main" className="App">
       <Box component="header" className="App-header">
         <SearchBar setSearchQuery={setSearchQuery} />
       </Box>
