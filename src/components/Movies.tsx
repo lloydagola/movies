@@ -9,6 +9,7 @@ export default function Movies({ movies }: TMovieListProps): JSX.Element {
       container
       gap={2}
       m="auto"
+      justifyContent="center"
       sx={{
         gridTemplateColumns: "auto-fill, minMax(280px, 1fr)",
         margin: "auto",
