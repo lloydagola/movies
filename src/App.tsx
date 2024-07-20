@@ -2,11 +2,11 @@ import { useState } from "react";
 import Box from "@mui/material/Box";
 
 import Movies from "./components/Movies";
+import SearchBar from "./components/SearchBar";
+
 import { TMovie } from "./types/types";
 import movies from "./_mocks/movies";
 import "./App.css";
-import SearchBar from "./components/SearchBar";
-
 // Function to filter data based on search query
 function filterMovies(query: string, movies: TMovie[]): TMovie[] {
   if (!query) {
@@ -22,15 +22,16 @@ function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const dataFiltered = filterMovies(searchQuery, movies);
   return (
-    <div className="App">
-      <header className="App-header"></header>
-      <body>
-        <Box>
-          <SearchBar setSearchQuery={setSearchQuery} />
+    <Box className="App">
+      <Box component="header" className="App-header">
+        <SearchBar setSearchQuery={setSearchQuery} />
+      </Box>
+      <Box component="body">
+        <Box component="section">
           <Movies movies={dataFiltered} />
         </Box>
-      </body>
-    </div>
+      </Box>
+    </Box>
   );
 }
 
