@@ -4,19 +4,9 @@ import Box from "@mui/material/Box";
 import Movies from "./components/Movies";
 import SearchBar from "./components/SearchBar";
 
-import { TMovie } from "./types/types";
+import filterMovies from "./utils/filterMovies";
 import movies from "./_mocks/movies";
 import "./App.css";
-// Function to filter data based on search query
-function filterMovies(query: string, movies: TMovie[]): TMovie[] {
-  if (!query) {
-    return movies;
-  } else {
-    return movies.filter((movie: TMovie) =>
-      movie.title.toLowerCase().includes(query.toLowerCase())
-    );
-  }
-}
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
