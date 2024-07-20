@@ -2,6 +2,7 @@
 export type TMovie = {
   title: string;
   snippet: string;
-  genres: string[];
+  genres?: string[];
   posterUrl: string;
+  rating?:string;
 };

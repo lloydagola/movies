@@ -12,7 +12,7 @@ type TMovieCardProps = { movie: TMovie };
 export default function MovieCard({ movie }: TMovieCardProps): JSX.Element {
   return (
     <Grid item>
-      <Card sx={{ width: "280px" }}>
+      <Card sx={{ width: "280px", height: "auto" }}>
         <CardMedia
           component="img"
           alt={movie.title}
@@ -22,10 +22,9 @@ export default function MovieCard({ movie }: TMovieCardProps): JSX.Element {
         <CardContent>
           <Typography variant="h6">{movie.title}</Typography>
           <Typography variant="body2">{movie.snippet}</Typography>
+
           <Box>
-            {movie.genres.map((genre: string) => (
-              <Chip key={genre} label={genre} />
-            ))}
+            <Chip key={movie?.rating} label={movie?.rating} />
           </Box>
         </CardContent>
       </Card>

@@ -5,7 +5,8 @@ import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 
 type TSearchBarProps = {
-  setSearchQuery: Dispatch<React.SetStateAction<string>>;
+  //setSearchQuery: Dispatch<React.SetStateAction<string>>;
+  setSearchQuery: any;
 };
 
 export default function SearchBar({
