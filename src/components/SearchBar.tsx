@@ -28,7 +28,7 @@ export default function SearchBar({
           endAdornment: (
             <InputAdornment position="start">
               <IconButton type="submit" aria-label="search">
-                <SearchIcon style={{ fill: "blue" }} />
+                <SearchIcon />
               </IconButton>
             </InputAdornment>
           ),
