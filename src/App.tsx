@@ -37,6 +37,7 @@ function App() {
         </Box>
         <Box component="footer">
           <Pagination
+            color="primary"
             count={pageCount}
             page={page}
             onChange={handlePageChange}
