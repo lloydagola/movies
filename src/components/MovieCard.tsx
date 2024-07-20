@@ -1,4 +1,5 @@
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
@@ -21,11 +22,11 @@ export default function MovieCard({ movie }: TMovieCardProps): JSX.Element {
         <CardContent>
           <Typography variant="h6">{movie.title}</Typography>
           <Typography variant="body2">{movie.snippet}</Typography>
-          <div>
+          <Box>
             {movie.genres.map((genre: string) => (
               <Chip key={genre} label={genre} />
             ))}
-          </div>
+          </Box>
         </CardContent>
       </Card>
     </Grid>
