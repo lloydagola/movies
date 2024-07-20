@@ -21,7 +21,7 @@ export default function SearchBar({
       <TextField
         id="search-bar"
         className="text"
-        onChange={(e) => handleSearch(e.target.value)}
+        onChange={setSearchQuery}
         type="search"
         placeholder="Search movies..."
         size="small"

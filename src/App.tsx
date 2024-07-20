@@ -26,12 +26,9 @@ function App() {
   const itemsPerPage = 10;
   const pageCount = Math.ceil(movies?.length / itemsPerPage);
 
-  const startIndex = (page - 1) * itemsPerPage;
-  const visibleMovies = movies?.slice(startIndex, startIndex + itemsPerPage);
-
-  function search(val: string) {
-    setSearchQuery(val);
-    console.log("searching for", val);
+  function search(e: any) {
+    setSearchQuery(e.target.value);
+    console.log("searching for", e.target.value);
   }
 
   //handle clicking different page on pagination menu
@@ -57,12 +54,7 @@ function App() {
         setError(e);
       }
     })();
-  }, []); /* 
-
-  useEffect(() => {
-    console.log({ token });
-    if (!token) return;
-  }, []); */
+  }, []);
 
   useEffect(() => {
     const requestOptions = {
@@ -75,7 +67,7 @@ function App() {
     setLoading(true);
     (async function () {
       const fetchData = await fetch(
-        `${BASE_URL}/movies?page=${page}`,
+        `${BASE_URL}/movies?page=${page}&search=${searchQuery}`,
         requestOptions
       );
       try {
@@ -90,9 +82,7 @@ function App() {
         setError(e);
       }
     })();
-  }, [page, token]);
-
-  /* console.log(movies); */
+  }, [page, searchQuery, token]);
 
   return (
     <ThemeProvider theme={theme}>
