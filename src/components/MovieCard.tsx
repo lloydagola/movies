@@ -6,10 +6,11 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
 import { TMovie } from "../types/types";
+import { memo } from "react";
 
 type TMovieCardProps = { movie: TMovie };
 
-export default function MovieCard({ movie }: TMovieCardProps): JSX.Element {
+function MovieCard({ movie }: TMovieCardProps): JSX.Element {
   return (
     <Grid item>
       <Card sx={{ width: "280px", height: "auto" }}>
@@ -37,3 +38,5 @@ export default function MovieCard({ movie }: TMovieCardProps): JSX.Element {
     </Grid>
   );
 }
+
+export default memo(MovieCard);

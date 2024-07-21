@@ -24,9 +24,9 @@ function App() {
   const itemsPerPage = 10;
   const pageCount = Math.ceil(movies?.length / itemsPerPage);
 
-  function search(e: any) {
+  const search = useCallback((e: any) => {
     setSearchQuery(e.target.value);
-  }
+  }, []);
 
   //handle clicking different page on pagination menu
   const handlePageChange = useCallback((_: unknown, page: number) => {
