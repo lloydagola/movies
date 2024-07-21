@@ -1,42 +1,39 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import { Pagination } from "@mui/material";
+import { Pagination, Typography } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 
 import theme from "./theme/theme";
 import Movies from "./components/Movies";
 import SearchBar from "./components/SearchBar";
 
-import filterMovies from "./utils/filterMovies";
 import "./App.css";
 import { BASE_URL } from "./utils/apiUtils";
 import { TMovie } from "./types/types";
+import { useDebounce } from "./hooks/useDebounce";
 
 function App() {
   const [token, setToken] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<unknown>(null);
+  const [error, setError] = useState<any>(null);
   const [movies, setMovies] = useState<TMovie[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
   const [page, setPage] = useState(1);
 
-  let dataFiltered: any[] = [];
-
-  if (movies) dataFiltered = filterMovies(searchQuery, movies);
   const itemsPerPage = 10;
   const pageCount = Math.ceil(movies?.length / itemsPerPage);
 
   function search(e: any) {
     setSearchQuery(e.target.value);
-    console.log("searching for", e.target.value);
   }
 
   //handle clicking different page on pagination menu
-  function handlePageChange(_: unknown, page: number) {
+  const handlePageChange = useCallback((_: unknown, page: number) => {
     setLoading(true);
     setPage(page);
     setLoading(false);
-  }
+  }, []);
 
   //get API token and save it to state
   useEffect(() => {
@@ -47,10 +44,9 @@ function App() {
         const { token } = await responseData.json();
         setToken(token);
         setLoading(false);
-      } catch (e) {
+      } catch (e: any) {
         //log error to service
         setLoading(false);
-        console.log("an error ocurred...", e);
         setError(e);
       }
     })();
@@ -67,13 +63,39 @@ function App() {
     setLoading(true);
     (async function () {
       const fetchData = await fetch(
-        `${BASE_URL}/movies?page=${page}&search=${searchQuery}`,
+        `${BASE_URL}/movies?page=${page}&search=${debouncedSearchQuery}`,
         requestOptions
       );
       try {
         const moviesJSON = await fetchData.json();
         if (moviesJSON) setMovies(moviesJSON.data);
-        console.log(moviesJSON.data);
+        setLoading(false);
+      } catch (e: any) {
+        //log error to service
+        setLoading(false);
+        console.log("an error ocurred...", e);
+        setError(e);
+      }
+    })();
+  }, [page, searchQuery, token]);
+
+  useEffect(() => {
+    const requestOptions = {
+      method: "GET", // or 'POST', 'PUT', etc.
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json", // Adjust as needed
+      },
+    };
+    setLoading(true);
+    (async function () {
+      const fetchData = await fetch(
+        `${BASE_URL}/movies/7GQMaTpw7B0MInjOHis5yu`,
+        requestOptions
+      );
+      try {
+        const searchs = await fetchData.json();
+        console.log(searchs.data);
         setLoading(false);
       } catch (e) {
         //log error to service
@@ -86,9 +108,14 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box component="header" className="App-header">
+      <Box component="header" className="App-header" p={4}>
         <SearchBar setSearchQuery={search} />
       </Box>
+      {error && (
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <Typography variant="h3">An error ocurred...</Typography>
+        </Box>
+      )}
       {movies?.length && !loading ? (
         <Box component="main" className="App">
           <Box component="body">
@@ -106,7 +133,9 @@ function App() {
           </Box>
         </Box>
       ) : (
-        <p>loading...</p>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <Typography variant="h3">loading...</Typography>
+        </Box>
       )}
     </ThemeProvider>
   );

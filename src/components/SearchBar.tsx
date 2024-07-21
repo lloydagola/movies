@@ -1,4 +1,4 @@
-import { Dispatch } from "react";
+import { Dispatch, useEffect, useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
@@ -12,10 +12,6 @@ type TSearchBarProps = {
 export default function SearchBar({
   setSearchQuery,
 }: TSearchBarProps): JSX.Element {
-  function handleSearch(value: string): void {
-    setSearchQuery(value);
-  }
-
   return (
     <form>
       <TextField
