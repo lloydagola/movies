@@ -11,6 +11,7 @@ import { memo } from "react";
 type TMovieCardProps = { movie: TMovie };
 
 function MovieCard({ movie }: TMovieCardProps): JSX.Element {
+  console.log({ movie });
   return (
     <Grid item>
       <Card sx={{ width: "280px", height: "auto" }}>
@@ -28,11 +29,13 @@ function MovieCard({ movie }: TMovieCardProps): JSX.Element {
           <Typography variant="h6">{movie.title}</Typography>
           <Typography variant="body2">{movie.snippet}</Typography>
 
-          <Box>
-            <Typography>
-              Rating: <Chip key={movie?.rating} label={movie?.rating} />
-            </Typography>
-          </Box>
+          {movie.rating && (
+            <Box>
+              <Typography>
+                Rating: <Chip key={movie.rating} label={movie.rating} />
+              </Typography>
+            </Box>
+          )}
         </CardContent>
       </Card>
     </Grid>

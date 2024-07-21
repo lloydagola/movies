@@ -53,6 +53,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (searchQuery === "") return;
     const requestOptions = {
       method: "GET", // or 'POST', 'PUT', etc.
       headers: {
@@ -69,15 +70,15 @@ function App() {
       try {
         const moviesJSON = await fetchData.json();
         if (moviesJSON) setMovies(moviesJSON.data);
-        setLoading(false);
       } catch (e: any) {
         //log error to service
-        setLoading(false);
         console.log("an error ocurred...", e);
         setError(e);
+      } finally {
+        setLoading(false);
       }
     })();
-  }, [page, searchQuery, token]);
+  }, [debouncedSearchQuery, page, searchQuery, token]);
 
   useEffect(() => {
     const requestOptions = {
@@ -89,27 +90,42 @@ function App() {
     };
     setLoading(true);
     (async function () {
-      const fetchData = await fetch(
-        `${BASE_URL}/movies/7GQMaTpw7B0MInjOHis5yu`,
-        requestOptions
-      );
+      const fetchData = await fetch(`${BASE_URL}/movies`, requestOptions);
       try {
-        const searchs = await fetchData.json();
-        console.log(searchs.data);
-        setLoading(false);
+        const moviesJSON = await fetchData.json();
+        if (moviesJSON) setMovies(moviesJSON.data);
       } catch (e) {
         //log error to service
-        setLoading(false);
         console.log("an error ocurred...", e);
         setError(e);
+      } finally {
+        setLoading(false);
       }
     })();
   }, [page, searchQuery, token]);
 
+  let moviesLength = movies?.length;
+
   return (
     <ThemeProvider theme={theme}>
-      <Box component="header" className="App-header" p={4}>
+      <Box
+        component="header"
+        className="App-header"
+        p={4}
+        display="flex"
+        flexDirection="row"
+        alignItems="center"
+      >
         <SearchBar setSearchQuery={search} />
+        {movies && (
+          <Typography ml={4}>
+            {moviesLength === 1
+              ? `${moviesLength} result`
+              : moviesLength > 1
+              ? `${moviesLength} results`
+              : "no results"}
+          </Typography>
+        )}
       </Box>
       {error && (
         <Box display="flex" justifyContent="center" alignItems="center">
