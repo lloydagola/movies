@@ -10,7 +10,7 @@ You will also see any lint errors in the console.
 
 
 ### Highlight something in your project that you thought was especially interesting or significant to your overall implementation.
-Using a custom, generic and reusable debounce function for performance
+Using a custom, generic and reusable debounce hook for performance
 
 ### Tell us what you are most pleased or proud of with your implementation.
 Using techniques such as React.Memo, useCallback for optimization 
