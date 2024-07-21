@@ -14,17 +14,23 @@ export default function MovieCard({ movie }: TMovieCardProps): JSX.Element {
     <Grid item>
       <Card sx={{ width: "280px", height: "auto" }}>
         <CardMedia
+          loading="lazy"
           component="img"
           alt={movie.title}
           sx={{ width: "280px" }}
-          image={movie.posterUrl}
+          image={
+            movie.posterUrl ||
+            "https://cringemdb.com/img/movie-poster-placeholder.png"
+          }
         />
         <CardContent>
           <Typography variant="h6">{movie.title}</Typography>
           <Typography variant="body2">{movie.snippet}</Typography>
 
           <Box>
-            <Chip key={movie?.rating} label={movie?.rating} />
+            <Typography>
+              Rating: <Chip key={movie?.rating} label={movie?.rating} />
+            </Typography>
           </Box>
         </CardContent>
       </Card>
